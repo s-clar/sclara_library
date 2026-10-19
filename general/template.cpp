@@ -49,21 +49,17 @@ P pplus(P a, P b) {
     return {a.first + b.first, a.second + b.second};
 }
 
-long long pminus(P a, P b) {
+P pminus(P a, P b) {
     return {a.first - b.first, a.second - b.second};
 }
 
-long long ptime(P a, P b) {
+P ptime(P a, P b) {
     return {a.first * b.first, a.second * b.second};
 }
 
-long long pdiv(P a, P b) {
-    if (b.first == 0) {
-        b.first = 1;
-    }
-    if (b.second == 0) {
-        b.second = 1;
-    }
+P pdiv(P a, P b) {
+    assert(b.first != 0);
+    assert(b.second != 0);
     return {a.first / b.first, a.second / b.second};
 }
 
@@ -86,6 +82,16 @@ bool chmin(T& a, U b) {
         return false;
     }
 }
+
+template <class T>
+void outspace_one(const T& x);
+
+template <class T>
+void outspace_one(const vector<T>& v);
+
+template <class T, class U>
+void outspace_one(const pair<T, U>& p);
+
 
 template <class T>
 void outspace_one(const T& x) {
@@ -115,7 +121,7 @@ void outspace(const T& first, const Ts&... rest) {
 }
 
 template<typename T>
-void outendl(std::vector<T> a) {
+void outendl(const std::vector<T>& a) {
     int n = a.size();
     for (int i = 0; i < n; ++i) {
         std::cout << a[i] << '\n';
@@ -123,29 +129,33 @@ void outendl(std::vector<T> a) {
 }
 
 void outdouble(long double a) {
-    std::cout << std::fixed << std::setprecision(10) << a << std::endl;
+    std::cout << std::fixed << std::setprecision(10) << a << '\n';
 }
 
 std::vector<long long> lltovec(long long n, long long base = 10, long long minsize = -1) {
+    assert(base >= 2);
+    assert(n >= 0);
+
     std::vector<long long> res;
-    while (minsize-- > 0 || n > 0) {
+    do {
         res.push_back(n % base);
         n /= base;
-    }
-    // std::reverse(res.begin(), res.end());
+    } while (n > 0 || (long long)res.size() < minsize);
+
     return res;
 }
 
-long long vectoll(std::vector<long long> vec, long long base = 10) {
+long long vectoll(const vector<long long>& vec, long long base = 10) {
+    assert(base >= 2);
     long long res = 0;
-    std::reverse(vec.begin(), vec.end());
-    for (auto i : vec) {
+    for (auto it = vec.rbegin(); it != vec.rend(); ++it) {
         res *= base;
-        res += i;
+        res += *it;
     }
-    std::reverse(vec.begin(), vec.end());
     return res;
 }
+
+bool factorialInitialized = false;
 
 // 階乗・階乗逆元の配列
 static long long fact[MAXN+1], invFact[MAXN+1];
@@ -154,6 +164,7 @@ static long long fact[MAXN+1], invFact[MAXN+1];
 long long modpow(long long a, long long b, long long M) {
     long long ret = 1 % M;
     a %= M;
+    if (a < 0) a += M;
     while (b > 0) {
         if (b & 1) ret = (ret * a) % M;
         a = (a * a) % M;
@@ -164,6 +175,9 @@ long long modpow(long long a, long long b, long long M) {
 
 // 前処理: 階乗と逆元のテーブルを作る
 void initFactorials() {
+    if (factorialInitialized) return;
+    factorialInitialized = true;
+
     // 階乗テーブル
     fact[0] = 1;
     for (int i = 1; i <= MAXN; i++) {
@@ -178,11 +192,13 @@ void initFactorials() {
 
 // 組み合わせ数 C(n, r)
 long long comb(int n, int r) {
+    assert(n <= MAXN);
     if (r < 0 || r > n) return 0;
+    initFactorials();
     return fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;
 }
 
-vector<pair<long long, long long>> rlell(vector<long long> a) {
+vector<pair<long long, long long>> rlell(const vector<long long>& a) {
     vector<pair<long long, long long>> res;
     if (a.empty()) return res;
     res.push_back({a[0], 1});
@@ -197,7 +213,7 @@ vector<pair<long long, long long>> rlell(vector<long long> a) {
     return res;
 }
 
-vector<pair<char, long long>> rlest(string a) {
+vector<pair<char, long long>> rlest(const string& a) {
     vector<pair<char, long long>> res;
     if (a.empty()) return res;
     res.push_back({a[0], 1});
