@@ -1,3 +1,5 @@
+// from https://github.com/s-clar/sclara_library/blob/main/general/template.cpp
+
 #include <bits/stdc++.h>
 
 using namespace std;
