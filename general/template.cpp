@@ -7,6 +7,9 @@ typedef std::pair<long long, long long> P;
 typedef std::priority_queue<P, std::vector<P>, std::greater<P>> PQ;
 typedef std::complex<double> cd;
 
+static const long long MOD = 998244353;
+static const int MAXN = 1000000;  // fact用
+
 struct P3 {
     long long first, second, third;
 };
@@ -143,9 +146,6 @@ long long vectoll(std::vector<long long> vec, long long base = 10) {
     std::reverse(vec.begin(), vec.end());
     return res;
 }
-
-static const long long MOD = 998244353;
-static const int MAXN = 1000000;  // 必要に応じて大きく設定
 
 // 階乗・階乗逆元の配列
 static long long fact[MAXN+1], invFact[MAXN+1];
