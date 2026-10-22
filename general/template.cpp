@@ -1,4 +1,5 @@
-// from https://github.com/s-clar/sclara_library/blob/main/general/template.cpp
+//  from: https://github.com/s-clar/sclara_library/blob/main/general/template.cpp
+//  version: 2026-10-22 13:42(GMT+9)
 
 #include <bits/stdc++.h>
 
