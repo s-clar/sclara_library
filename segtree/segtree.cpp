@@ -1,5 +1,5 @@
 //  from: https://github.com/s-clar/sclara_library/blob/main/segtree/segtree.cpp
-//  version: 2026-10-22 13:39(GMT+9)
+//  version: 2026-10-22 13:43(GMT+9)
 
 /*
     Segment Tree
